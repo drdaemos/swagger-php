@@ -6,6 +6,8 @@
 
 namespace Swagger;
 
+use Doctrine\Common\Annotations\DocParser;
+
 /**
  * Swagger\StaticAnalyser extracts swagger-php annotations from php code using static analysis.
  */
@@ -13,11 +15,16 @@ class StaticAnalyser
 {
     /**
      * @param string $filename
+     * @param DocParser $annotationParser
      */
-    public function __construct($filename = null)
+    public function __construct($filename = null, $annotationParser = null)
     {
         if ($filename !== null) {
             $this->fromFile($filename);
+        }
+
+        if ($annotationParser !== null) {
+            $this->annotationParser = $annotationParser;
         }
     }
 
@@ -55,7 +62,7 @@ class StaticAnalyser
      */
     protected function fromTokens($tokens, $parseContext)
     {
-        $analyser = new Analyser();
+        $analyser = $this->annotationParser ? new Analyser($this->annotationParser) : new Analyser();
         $analysis = new Analysis();
         reset($tokens);
         $token = '';
@@ -230,7 +237,10 @@ class StaticAnalyser
                         }
                     }
                 }
-                $analyser->docParser->setImports($imports);
+
+                if (!$this->annotationParser) {
+                    $analyser->docParser->setImports($imports);
+                }
                 continue;
             }
         }

@@ -46,7 +46,7 @@ class Analyser
     /**
      * Use @SWG\* for swagger annotations (unless overwritten by a use statement).
      */
-    public static $defaultImports = ['swg' => 'Swagger\Annotations'];
+    public static $defaultImports = ['swg' => 'Swagger\\Annotations'];
 
     /**
      * Allows Annotation classes to know the context of the annotation that is being processed.
