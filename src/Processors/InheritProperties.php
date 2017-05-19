@@ -21,7 +21,7 @@ class InheritProperties
     {
         $schemas = $analysis->getAnnotationsOfType('\Swagger\Annotations\Schema');
         foreach ($schemas as $schema) {
-            if ($schema->_context->is('class')) {
+            if (null === $schema->ref && $schema->_context->is('class')) {
                 $existing = [];
                 if (is_array($schema->properties) || $schema->properties instanceof Traversable) {
                     foreach ($schema->properties as $property) {
