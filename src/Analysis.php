@@ -303,6 +303,15 @@ class Analysis
     }
 
     /**
+     * Set processor list
+     * @param array $list Processor closures
+     */
+    public static function setProcessors($list)
+    {
+        self::$processors = $list;
+    }
+
+    /**
      * Register a processor
      * @param Closure $processor
      */
